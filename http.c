@@ -61,7 +61,7 @@ int http_read_line(int fd, char *buf, size_t size)
     return -1;
 }
 
-const char *http_request_line(int fd, char *reqpath, char *env, size_t *env_len)
+const char *http_request_line(int fd, char *reqpath, size_t reqpath_len, char *env, size_t *env_len)
 {
     static char buf[8192];      /* static variables are not on the stack */
     char *sp1, *sp2, *qp, *envp = env;
@@ -102,6 +102,9 @@ const char *http_request_line(int fd, char *reqpath, char *env, size_t *env_len)
     }
 
     /* decode URL escape sequences in the requested path into reqpath */
+    /* fix buffer overflow */
+    if (strlen(sp1) > reqpath_len)
+        return "Request URL too long";
     url_decode(reqpath, sp1);
 
     envp += sprintf(envp, "REQUEST_URI=%s", reqpath) + 1;
@@ -154,7 +157,9 @@ const char *http_request_headers(int fd)
             if (buf[i] == '-')
                 buf[i] = '_';
         }
-
+        /* fix buffer overflow */
+        if (strlen(sp) > sizeof(value))
+            return "Request header's URL too long";
         /* Decode URL escape sequences in the value */
         url_decode(value, sp);
 

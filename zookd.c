@@ -104,7 +104,7 @@ static void process_client(int fd)
     const char *errmsg;
 
     /* get the request line */
-    if ((errmsg = http_request_line(fd, reqpath, env, &env_len)))
+    if ((errmsg = http_request_line(fd, reqpath, sizeof(reqpath), env, &env_len)))
         return http_err(fd, 500, "http_request_line: %s", errmsg);
 
     env_deserialize(env, sizeof(env));
