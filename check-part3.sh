@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HOST=localhost
-PORT=8080
+PORT=8081
 GRAD=/home/student/grades.txt
 
 cleanup() {
@@ -15,7 +15,7 @@ cleanup
 trap cleanup EXIT
 
 # launch the server
-script -q -f -c "sh -c './clean-env.sh ./$1 8080'" /tmp/zookd.out &> /dev/null &
+script -q -f -c "sh -c './clean-env.sh ./$1 8081'" /tmp/zookd.out &> /dev/null &
 
 # wait until we can connect
 sleep 1

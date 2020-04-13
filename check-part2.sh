@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HOST=localhost
-PORT=8080
+PORT=8081
 STRACELOG=/tmp/strace.log
 need_cleanup=1
 
@@ -19,7 +19,7 @@ cleanup
 trap cleanup EXIT
 
 # launch the server. strace so we can see SEGVs.
-strace -f -e none -o "$STRACELOG" ./clean-env.sh ./$1 8080 &> /dev/null &
+strace -f -e none -o "$STRACELOG" ./clean-env.sh ./$1 8081 &> /dev/null &
 need_cleanup=1
 
 # wait until we can connect

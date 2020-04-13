@@ -43,7 +43,7 @@ def login_page(op, user, password):
     postdata = "login_username=" + user + "&login_password=" + password + \
                "&nexturl=%2Fzoobar%2Findex.cgi%2F&" + \
                ("submit_registration=Register" if op == "register" else "submit_login=Log+in")
-    r = run_wget(["http://%s:8080/zoobar/index.cgi/login" % serverip,
+    r = run_wget(["http://%s:8081/zoobar/index.cgi/login" % serverip,
                   "--save-cookies", "/tmp/cookies.txt", "--post-data",
                   postdata, "--keep-session-cookies"])
     
@@ -66,11 +66,11 @@ def post(url, cookies, postdata):
 # sender must already be logged in
 def transfer(sender_cookies, recipient, zoobars):
     p = "recipient=%s&zoobars=%s&submission=Send" % (recipient, str(zoobars))
-    return post("http://%s:8080/zoobar/index.cgi/transfer" % serverip,
+    return post("http://%s:8081/zoobar/index.cgi/transfer" % serverip,
                 sender_cookies, p)
 
 def view_user(cookies, username):
-    return get(("http://%s:8080/zoobar/index.cgi/users?user=" % serverip) + username, cookies)
+    return get(("http://%s:8081/zoobar/index.cgi/users?user=" % serverip) + username, cookies)
 
 def check_zoobars(html, user, zoobars, zmsg):
     b = str(zoobars).encode()

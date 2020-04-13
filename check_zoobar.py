@@ -52,7 +52,7 @@ def setup():
 
     log("+ running zookd in the background.. output in /tmp/zookd.out")
     zookd_out = open("/tmp/zookd.out", "w")
-    subprocess.Popen(["./zookd", "8080"], stdout=zookd_out, stderr=zookd_out)
+    subprocess.Popen(["./zookd", "8081"], stdout=zookd_out, stderr=zookd_out)
     
     atexit.register(killall)
     
